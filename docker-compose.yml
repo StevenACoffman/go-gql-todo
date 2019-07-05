@@ -1,0 +1,43 @@
+version: "3.7"
+services:
+  todo-db:
+    image: postgres:latest
+    container_name: todo-db
+    restart: always
+    environment:
+      POSTGRES_DB: todo
+      POSTGRES_USER: todo
+      POSTGRES_PASSWORD: todo1
+    networks:
+      - todo-network
+    ports:
+      - 5432:5432
+
+  todo-app:
+    image: coderste/todo-app:1.0.0
+    command: reflex -d none -r (\.go$$|go\.mod) -s -- go run ./main.go
+    container_name: todo-app
+    environment:
+      dbhost: todo-db
+      GOOS: linux
+      GOARCH: amd64
+      CGO_ENABLED: 0
+      GOPATH: /go
+      LOG_LEVEL: debug
+      GO111MODULE: "on"
+      GOPROXY: https://proxy.golang.org
+    links:
+      - todo-db:todo-db
+    ports:
+      - 8080:8080
+    networks:
+      - todo-network
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - todo-db
+    working_dir: /app
+
+networks:
+  todo-network:
+    name: todo-network

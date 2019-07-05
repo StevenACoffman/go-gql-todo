@@ -1,0 +1,26 @@
+schema: "./internal/api/schema.graphql"
+
+# Let gqlgen know where to put the generated server
+exec:
+  filename: ./internal/api/generated.go
+  package: api
+
+# Let gqlgen know where to put the generated models (if any)
+model:
+  filename: ./internal/model/generated.go
+  package: model
+
+# Optional, turns on resolver stub generation
+#resolver:
+#  filename: ./internal/api/resolver_gen.go_stub # where to write them
+#  type: Resolver # what's the resolver root implementation type called?
+
+# Tell gqlgen about any existing models you want to reuse for
+# graphql. These normally come from the db or a remote api.
+models:
+  Todo:
+    model: github.com/StevenACoffman/go-gql-todo/internal/model.Todo
+  ID:
+    model: # override the default id marshaller to use ints
+      - github.com/99designs/gqlgen/graphql.IntID
+      - github.com/99designs/gqlgen/graphql.ID
