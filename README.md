@@ -32,5 +32,5 @@ curl -g 'http://localhost:8081/query?query=mutation+_{createTodo(text:"My+new+to
 curl -g 'http://localhost:8081/query?query={todoList{id,text,done}}'
 
 // To update a ToDo
-curl -g 'http://localhost:8081/query?query=mutation+_{updateTodo(id:"1",text:"My+new+todo+updated",done:true){id,text,done}}'
+curl -g 'http://localhost:8081/query?query=mutation+_{updateTodo(id:"1",changes:{text:"My+new+todo+updated",done:true}){id,text,done}}'
 ```
