@@ -3,17 +3,22 @@ schema {
     mutation: MyMutation
 }
 
+"Query for a single todo by id, lastTodo, or all todos"
 type MyQuery {
     todo(id: ID!): Todo
     lastTodo: Todo
     todos: [Todo!]!
 }
 
+"Mutation to create a Todo, or Update and existing one"
 type MyMutation {
+    "Create a new Task item"
     createTodo(todo: TodoInput!): Todo!
+    "Update existing todo, mark it Done or not Done"
     updateTodo(id: ID!, changes: Map!): Todo
 }
 
+"a basic task item"
 type Todo {
     id: ID!
     text: String!
